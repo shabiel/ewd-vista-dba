@@ -1,0 +1,26 @@
+{
+  "name": "ewd-vista-dba",
+  "engines": {
+    "node": ">=6"
+  },
+  "version": "0.0.0",
+  "description": "EWD VistA: DBA Module",
+  "main": "index.js",
+  "author": "Sam Habiel",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shabiel/ewd-vista-dba.git"
+  },
+  "devDependencies": {
+    "eslint": "",
+    "eslint-plugin-json": ""
+  },
+  "ewdVista": {
+    "parentModule": "ewd-vista",
+    "name": "Database Administration",
+    "htmlName": "dba",
+    "sortOrder": "50",
+    "securityKey": "XUMGR"
+  }
+}
