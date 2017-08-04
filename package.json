@@ -3,7 +3,7 @@
   "engines": {
     "node": ">=6"
   },
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "EWD VistA: DBA Module",
   "main": "index.js",
   "author": "Sam Habiel",
