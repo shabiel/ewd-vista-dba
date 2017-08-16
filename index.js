@@ -62,11 +62,80 @@ module.exports.handlers.getNumberspaceData = function(messageObj, session, send,
     record.push(numberspaceHolder);
     record.push(namespaces.join(', '));
     record.push(contact.join('<br/>'));
-    record.push(notes.join('<br/>'))
+    record.push(notes.join('<br/>'));
 
     // Add to return array
     records.push(record);
   });
 
+  finished({headers: headers, records: records});
+};
+
+module.exports.handlers.getNamespaceData = function(messageObj, session, send, finished) {
+  // Our Return Variable
+  let records = [];
+  
+  // Our Return Headers
+  let headers = [];
+  headers.push('Namespace');
+  headers.push('Assigned to');
+  headers.push('Numberspaces');
+  headers.push('Database Coordinator');
+  headers.push('Notes');
+
+  let query = {
+    file: {number: '50004'},
+    flags: 'PQ',
+    index: '#',
+  };
+  let namespaceRecords = fileman.filemanDicSync.call(this, query).records;
+  
+  namespaceRecords.forEach((item) => {
+    let ien = item.ien;
+    let namespace = this.db.function({function: 'GET1^DIQ',
+      arguments: [50004, ien, '.01']}).result;
+    let assignee = this.db.function({function: 'GET1^DIQ',
+      arguments: [50004, ien, '.02']}).result;
+
+    let query = {
+      file: {number: '50004.3'},
+      fields: [ {number: '.01'}, {number: '.02'} ],
+      iens: `,${ien},`,
+      flags: 'PQ',
+      index: '#',
+    };
+    let numberspacesRecords = 
+      fileman.filemanDicSync.call(this, query).records;
+    
+    let numberspaces = [];
+    numberspacesRecords.forEach((record) => {
+      let each = record.startnumber.toString() + '-' + 
+        record.endnumber.toString();
+      numberspaces.push(each);
+    });
+
+    this.db.use('TMP', 'QEWDWP', process.pid).delete();
+    this.db.function({function: 'GET1^DIQ',
+      arguments: [50004, ien, 4, '', '^TMP("QEWDWP",$J)']});
+    let coor = this.db.use('TMP', 'QEWDWP', process.pid).getDocument();
+    
+    this.db.use('TMP', 'QEWDWP', process.pid).delete();
+    this.db.function({function: 'GET1^DIQ',
+      arguments: [50004, ien, 5, '', '^TMP("QEWDWP",$J)']});
+    let notes = this.db.use('TMP', 'QEWDWP', process.pid).getDocument();
+
+    let record = [];
+    record.push(ien);
+    record.push(namespace);
+    record.push(assignee);
+    record.push(numberspaces.join('<br/>'));
+    record.push(Object.keys(coor).map((k) => coor[k]).join('<br/>'));
+    record.push(Object.keys(notes).map((k) => notes[k]).join('<br/>'));
+
+    // Add to return array
+    records.push(record);
+  });
+
+  this.db.use('TMP', 'QEWDWP', process.pid).delete();
   finished({headers: headers, records: records});
 };
