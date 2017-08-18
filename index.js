@@ -27,7 +27,15 @@ module.exports.handlers.getNumberspaceData = function(messageObj, session, send,
   // Loop through every record in a Fileman File
   // Equivalent to the M code:
   // = for i=0:0 set i=$order(^DBA(50003,i)) quit:'i  do
-  this.db.use('DBA','50003').forEachChild({range: {from: 1, to: ' '}}, (ien,node) => {
+  let query = {
+    file: {number: '50003'},
+    flags: 'PQ',
+  };
+  let numberspaceRecords = fileman.filemanDicSync.call(this, query).records;
+  
+  numberspaceRecords.forEach((item) => {
+    let ien = item.ien;
+    let node = this.db.use('DBA', 50004, ien);
 
     // Get the zero node
     let z = node.$('0').value;
