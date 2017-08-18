@@ -29,13 +29,15 @@ module.exports.handlers.getNumberspaceData = function(messageObj, session, send,
   // = for i=0:0 set i=$order(^DBA(50003,i)) quit:'i  do
   let query = {
     file: {number: '50003'},
-    flags: 'PQ',
+    flags: 'P',
   };
+
   let numberspaceRecords = fileman.filemanDicSync.call(this, query).records;
+  console.log(numberspaceRecords);
   
   numberspaceRecords.forEach((item) => {
     let ien = item.ien;
-    let node = this.db.use('DBA', 50004, ien);
+    let node = this.db.use('DBA', 50003, ien);
 
     // Get the zero node
     let z = node.$('0').value;
