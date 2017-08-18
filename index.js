@@ -86,7 +86,6 @@ module.exports.handlers.getNamespaceData = function(messageObj, session, send, f
   let query = {
     file: {number: '50004'},
     flags: 'PQ',
-    index: '#',
   };
   let namespaceRecords = fileman.filemanDicSync.call(this, query).records;
   
