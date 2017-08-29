@@ -17,15 +17,15 @@ dba.prep = function(EWD) {
       //Create table header
       let allData = responseObj.message;
       let ths = '<tr>';
-      allData.headers.forEach((h) => ths += `<th>${h}</th>`);
+      allData.headers.forEach(function(h) {ths += '<th>' + h + '</th>';});
       ths += '</tr>';
       $('#numData thead').html(ths);
       
       // Add table rows
-      allData.records.forEach((r) => {
-        let dataRow = `<tr id="${r[0]}">`;
+      allData.records.forEach(function(r) {
+        let dataRow = '<tr id="' + r[0] + '">';
         r.shift(); // get rid of IEN
-        r.forEach((d) => dataRow += `<td>${d}</td>`);
+        r.forEach(function(d) {dataRow += '<td>' + d + '</td>';});
         dataRow += '</tr>';
         $('#numData tbody').append(dataRow);
       });
@@ -39,15 +39,15 @@ dba.prep = function(EWD) {
     EWD.send(messageObj, function(responseObj) {
       let allData = responseObj.message;
       let ths = '<tr>';
-      allData.headers.forEach((h) => ths += `<th>${h}</th>`);
+      allData.headers.forEach(function(h) {ths += '<th>' + h + '</th>';});
       ths += '</tr>';
       $('#nameData thead').html(ths);
       
       // Add table rows
-      allData.records.forEach((r) => {
-        let dataRow = `<tr id="${r[0]}">`;
+      allData.records.forEach(function(r) {
+        let dataRow = '<tr id="' + r[0] + '">';
         r.shift(); // get rid of IEN
-        r.forEach((d) => dataRow += `<td>${d}</td>`);
+        r.forEach(function(d) {dataRow += '<td>' + d + '</td>';});
         dataRow += '</tr>';
         $('#nameData tbody').append(dataRow);
       });
