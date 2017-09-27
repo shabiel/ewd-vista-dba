@@ -24,6 +24,10 @@ module.exports.handlers.getNumberspaceData = function(messageObj, session, send,
   headers.push('Contact');
   headers.push('Notes');
 
+  let files     = [ 50003, 50003, 50003, 50003, 50003, 50003];
+  let dataTypes = [ 'number', 'number', 'text', 'text', 'textarea', 'textarea' ];
+  let fields    = ['.01', '.02', '.03', '1', '2', '3'];
+
   // Loop through every record in a Fileman File
   // Equivalent to the M code:
   // = for i=0:0 set i=$order(^DBA(50003,i)) quit:'i  do
@@ -33,7 +37,6 @@ module.exports.handlers.getNumberspaceData = function(messageObj, session, send,
   };
 
   let numberspaceRecords = fileman.filemanDicSync.call(this, query).records;
-  console.log(numberspaceRecords);
   
   numberspaceRecords.forEach((item) => {
     let ien = item.ien;
@@ -77,8 +80,9 @@ module.exports.handlers.getNumberspaceData = function(messageObj, session, send,
     // Add to return array
     records.push(record);
   });
-
-  finished({headers: headers, records: records});
+  
+  // Note ES6 syntax below
+  finished({headers, files, dataTypes, fields, records});
 };
 
 module.exports.handlers.getNamespaceData = function(messageObj, session, send, finished) {

@@ -1,1 +1,5 @@
-/* Bed Board */
+#numData  tbody tr td i.fa-pencil-square-o,
+#nameData tbody tr td i.fa-pencil-square-o
+{
+  cursor: pointer;
+}
