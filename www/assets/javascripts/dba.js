@@ -39,14 +39,14 @@ dba.prep = function(EWD) {
         let dataRow = '<tr id="' + r[0] + '">';
         r.shift(); // get rid of IEN
         // Add edit icon
-        dataRow += '<td><i class="fa fa-pencil-square-o" title="edit"></i></td>';
+        dataRow += '<td><i title="edit">E</i></td>';
         r.forEach(function(d) {dataRow += '<td>' + d + '</td>';});
         dataRow += '</tr>';
         $('#numData tbody').append(dataRow);
       });
 
       // Attach click event to edit icons
-      $('#numData tbody tr td i.fa-pencil-square-o').click(function(e) {
+      $('#numData tbody tr td i').click(function(e) {
         let tr   = this.parentElement.parentElement;
         let name = tr.children[1].innerText;
         let ien  = tr.id;
@@ -154,7 +154,7 @@ dba.prep = function(EWD) {
         let dataRow = '<tr id="' + r[0] + '">';
         r.shift(); // get rid of IEN
         // Add edit icon
-        dataRow += '<td><i class="fa fa-pencil-square-o" title="edit"></i></td>';
+        dataRow += '<td><i title="edit">E</i></td>';
         r.forEach(function(d) {dataRow += '<td>' + d + '</td>';});
         dataRow += '</tr>';
         $('#nameData tbody').append(dataRow);
