@@ -47,7 +47,6 @@ module.exports.handlers.getNumberspaceData = function(messageObj, session, send,
 
     // Get the zero node
     let z = node.$('0').value;
-    console.log(z);
     let startNumber  = z.$p(1);
     let endNumber    = z.$p(2);
     let numberspaceHolder = z.$p(3);
@@ -89,12 +88,14 @@ module.exports.handlers.getNumberspaceData = function(messageObj, session, send,
     records.push(record);
   });
   
+  /*
   fs.writeFile("/tmp/numberSpaceData.json", JSON.stringify({headers, files, dataTypes, fields, records}), function(err) {
     if(err) {
       return console.log(err);
     }
     console.log("The file was saved!");
   }); 
+  */
 
   // Note ES6 syntax below
   finished({headers, files, dataTypes, fields, records});
@@ -184,12 +185,15 @@ module.exports.handlers.getNamespaceData = function(messageObj, session, send, f
   });
 
   this.db.use('TMP', 'QEWDWP', process.pid).delete();
+
+  /*
   fs.writeFile("/tmp/nameSpaceData.json", JSON.stringify({headers, files, dataTypes, fields, records}), function(err) {
     if(err) {
       return console.log(err);
     }
     console.log("The file was saved!");
   });
+  */
 
   finished({headers, files, dataTypes, fields, records});
 };
